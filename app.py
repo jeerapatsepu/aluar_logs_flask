@@ -12,6 +12,7 @@ import models
 from resources.auth.auth_create import blp as AuthCreateBlueprint
 from resources.auth.auth_login import blp as AuthLoginBlueprint
 from resources.log.log_create import blp as LogCreateBlueprint
+from resources.log.log_list import blp as LogListBlueprint
 
 def create_app(db_url=None):
     load_dotenv()
@@ -43,5 +44,6 @@ def create_app(db_url=None):
     api.register_blueprint(AuthCreateBlueprint)
     api.register_blueprint(AuthLoginBlueprint)
     api.register_blueprint(LogCreateBlueprint)
+    api.register_blueprint(LogListBlueprint)
 
     return app
