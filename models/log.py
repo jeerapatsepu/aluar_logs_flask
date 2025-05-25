@@ -9,3 +9,5 @@ class Log(db.Model):
     privacy = db.Column(db.String)
     description = db.Column(db.String)
     is_success = db.Column(db.Boolean)
+    created_date = db.Column(db.String)
+    created_timestamp = db.Column(db.String)

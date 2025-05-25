@@ -25,24 +25,26 @@ class LogCreate(MethodView):
         privacy = request["privacy"]
         description = request["description"]
         is_success = request["is_success"]
+        time = datetime.now(timezone.utc)
         try:
             uid = uuid4().hex
             log = Log(id=uid,
                       owner=sub,
                       privacy=privacy,
                       description=description,
-                      is_success=is_success)
+                      is_success=is_success,
+                      created_date=str(time),
+                      created_timestamp=str(time.timestamp()))
             db.session.add(log)
             db.session.commit()
             data = LogCreateDataResponseSchema()
-            return getResponse(1000, data, error=None)
+            return getResponse(time, 1000, data, error=None)
         except Exception as e:
             logging.exception("LogCreate")
             error = getError("Service can not answer", "Exeption has occured")
-            return getResponse(5000, None, error=error)
+            return getResponse(time, 5000, None, error=error)
 
-def getResponse(response_code, data, error):
-    time = datetime.now(timezone.utc)
+def getResponse(time, response_code, data, error):
     response = LogCreateResponseSchema()
     meta = MetaSchema()
     meta.response_id = uuid4().hex
