@@ -22,9 +22,11 @@ class LogCreateRequestSchema(Schema):
 class LogCreateDataResponseSchema(Schema):
     id = fields.Str(dump_only=True)
     owner = fields.Str(dump_only=True)
-    privacy = EnumField(LogPrivacyType)
+    privacy = fields.Str(dump_only=True)
     description = fields.Str(dump_only=True)
     is_success = fields.Bool(dump_only=True)
+    created_date = fields.Str(dump_only=True)
+    created_timestamp = fields.Str(dump_only=True)
 
 class LogCreateResponseSchema(Schema):
     meta = fields.Nested(MetaSchema(), dump_only=True)

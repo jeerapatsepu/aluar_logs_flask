@@ -38,6 +38,13 @@ class LogCreate(MethodView):
             db.session.add(log)
             db.session.commit()
             data = LogCreateDataResponseSchema()
+            data.id = log.id
+            data.owner = log.owner
+            data.privacy = log.privacy
+            data.description = log.description
+            data.is_success = log.is_success
+            data.created_date = log.created_date
+            data.created_timestamp = log.created_timestamp
             return getResponse(time, 1000, data, error=None)
         except Exception as e:
             logging.exception("LogCreate")
