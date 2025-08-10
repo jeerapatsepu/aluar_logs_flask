@@ -1,49 +1,6 @@
-import os
-import secrets
-from flask import Flask, jsonify
-from flask_bcrypt import Bcrypt
-from flask_migrate import Migrate
-from flask_smorest import Api
-from datetime import timedelta
-from dotenv import load_dotenv
-from core.__init_ import handle_jwt
-from shared import db
-import models
-from resources.auth.auth_create import blp as AuthCreateBlueprint
-from resources.auth.auth_login import blp as AuthLoginBlueprint
-from resources.log.log_create import blp as LogCreateBlueprint
-from resources.log.log_list import blp as LogListBlueprint
+from app import create_app
 
-def create_app(db_url=None):
-    load_dotenv()
-    app = Flask(__name__)
+app = create_app()
 
-    SECRET_KEY = os.getenv("SECRET_KEY", str(secrets.SystemRandom().getrandbits(128)))
-    JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", str(secrets.SystemRandom().getrandbits(128)))
-
-    app.config["PROPAGATE_EXCEPTIONS"] = True
-    app.config["API_TITLE"] = "Keep REST API"
-    app.config["API_VERSION"] = "v1"
-    app.config["OPENAPI_VERSION"] = "3.0.3"
-    app.config["OPENAPI_URL_PREFIX"] = "/"
-    app.config["OPENAPI_SWAGGER_UI_PATH"] = "/swagger-ui"
-    app.config["OPENAPI_SWAGGER_UI_URL"] = "https://cdn.jsdelivr.net/npm/swagger-ui-dist/"
-    app.config["SQLALCHEMY_DATABASE_URI"] = db_url or os.getenv("DATABASE_URL", "sqlite:///data.db")
-    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-    app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(days=15)
-    app.config['JWT_REFRESH_TOKEN_EXPIRES'] = timedelta(days=30)
-    app.config['SECRET_KEY'] = SECRET_KEY
-    app.config["JWT_SECRET_KEY"] = JWT_SECRET_KEY
-    app.config['JWT_TOKEN_LOCATION'] = ['headers']
-
-    db.init_app(app)
-    bcrypt = Bcrypt(app)
-    migrate = Migrate(app, db)
-    handle_jwt(app)
-    api = Api(app)
-    api.register_blueprint(AuthCreateBlueprint)
-    api.register_blueprint(AuthLoginBlueprint)
-    api.register_blueprint(LogCreateBlueprint)
-    api.register_blueprint(LogListBlueprint)
-
-    return app
+if __name__ == '__main__':
+    app.run()
