@@ -6,12 +6,13 @@ from flask_smorest import Api
 from datetime import timedelta
 from dotenv import load_dotenv
 from app.jwt import handle_jwt
-from app.extension import db, bcrypt, login_manager
+from app.extension import db, bcrypt
 import models
 from resources.auth.auth_create.auth_create import blp as AuthCreateBlueprint
 from resources.auth.auth_login import blp as AuthLoginBlueprint
 from resources.log.log_create import blp as LogCreateBlueprint
 from resources.log.log_list import blp as LogListBlueprint
+from resources.home.boardway.boardway_create.boardway_create import blp as BoardwayCreateBlueprint
 
 def create_app(db_url=None) -> Flask:
     load_dotenv()
@@ -32,7 +33,6 @@ def create_app(db_url=None) -> Flask:
     app.config["JWT_SECRET_KEY"] = JWT_SECRET_KEY
     app.config['JWT_TOKEN_LOCATION'] = ['headers']
 
-    login_manager.init_app(app)
     db.init_app(app)
     bcrypt.init_app(app)
     migrate = Migrate(app, db)
@@ -42,5 +42,6 @@ def create_app(db_url=None) -> Flask:
     api.register_blueprint(AuthLoginBlueprint)
     api.register_blueprint(LogCreateBlueprint)
     api.register_blueprint(LogListBlueprint)
+    api.register_blueprint(BoardwayCreateBlueprint)
 
     return app

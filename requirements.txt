@@ -1,5 +1,4 @@
 flask
-flask-login
 flask-smorest
 python-dotenv
 sqlalchemy
