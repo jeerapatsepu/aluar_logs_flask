@@ -5,6 +5,7 @@ from flask_jwt_extended import (
     create_access_token,
     create_refresh_token
 )
+from flask_login import login_user, logout_user, current_user, login_required
 from datetime import datetime, timezone
 from models.usli import USLI
 from resources.auth.auth_create.auth_create_request_schema import AuthCreateRequestSchema, AuthLoginDataResponseSchema, AuthLoginResponseSchema
@@ -23,6 +24,7 @@ class AuthLogin(MethodView):
         password = request["password"]
         usli = USLI.query.filter_by(email=email).first()
         if usli and bcrypt.check_password_hash(pw_hash=usli.password, password=password):
+            login_user(usli, remember=True)
             return getAuthLoginSuccessRespone(1000, usli)
         else:
             # logging.exception("AuthLogin")
