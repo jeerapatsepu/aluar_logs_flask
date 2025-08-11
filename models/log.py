@@ -1,4 +1,4 @@
-from shared import db
+from app.extension import db
 
 
 class Log(db.Model):

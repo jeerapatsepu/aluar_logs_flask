@@ -10,7 +10,7 @@ from datetime import datetime, timezone
 from models.usli import USLI
 from schemas.auth.auth_create import AuthCreateRequestSchema, AuthLoginDataResponseSchema, AuthLoginResponseSchema
 from uuid import uuid4
-from shared import db
+from app.extension import db
 from schemas.meta import MetaSchema
 from shared import getError
 

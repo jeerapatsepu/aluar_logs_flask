@@ -1,1 +1,0 @@
-from core.jwt import handle_jwt

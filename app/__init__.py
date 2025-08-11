@@ -1,13 +1,12 @@
 import os
 import secrets
 from flask import Flask, jsonify
-from flask_bcrypt import Bcrypt
 from flask_migrate import Migrate
 from flask_smorest import Api
 from datetime import timedelta
 from dotenv import load_dotenv
-from core.__init_ import handle_jwt
-from shared import db
+from app.jwt import handle_jwt
+from app.extension import db, bcrypt, login_manager
 import models
 from resources.auth.auth_create import blp as AuthCreateBlueprint
 from resources.auth.auth_login import blp as AuthLoginBlueprint
@@ -33,8 +32,9 @@ def create_app(db_url=None) -> Flask:
     app.config["JWT_SECRET_KEY"] = JWT_SECRET_KEY
     app.config['JWT_TOKEN_LOCATION'] = ['headers']
 
+    login_manager.init_app(app)
     db.init_app(app)
-    bcrypt = Bcrypt(app)
+    bcrypt.init_app(app)
     migrate = Migrate(app, db)
     handle_jwt(app)
     api = Api(app)
