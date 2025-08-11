@@ -1,6 +1,5 @@
 from app.extension import db
 
-
 class Boardway(db.Model):
     __tablename__ = "boardways"
 

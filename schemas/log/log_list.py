@@ -9,5 +9,5 @@ class LogListRequestSchema(Schema):
     owner = fields.Str()
 
 class LogListResponseSchema(Schema):
-    meta = fields.Nested(MetaSchema(), dump_only=True)
-    data = fields.Nested(LogCreateDataResponseSchema(), dump_only=True, many=True)
+    meta = fields.Nested(MetaSchema, dump_only=True)
+    data = fields.Nested(LogCreateDataResponseSchema, dump_only=True, many=True)

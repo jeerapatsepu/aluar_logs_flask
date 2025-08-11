@@ -13,6 +13,7 @@ from resources.auth.auth_login import blp as AuthLoginBlueprint
 from resources.log.log_create import blp as LogCreateBlueprint
 from resources.log.log_list import blp as LogListBlueprint
 from resources.home.boardway.boardway_create.boardway_create import blp as BoardwayCreateBlueprint
+from resources.home.boardway.boardway_list.boardway_list import blp as BoardwayListBlueprint
 
 def create_app(db_url=None) -> Flask:
     load_dotenv()
@@ -43,5 +44,6 @@ def create_app(db_url=None) -> Flask:
     api.register_blueprint(LogCreateBlueprint)
     api.register_blueprint(LogListBlueprint)
     api.register_blueprint(BoardwayCreateBlueprint)
+    api.register_blueprint(BoardwayListBlueprint)
 
     return app

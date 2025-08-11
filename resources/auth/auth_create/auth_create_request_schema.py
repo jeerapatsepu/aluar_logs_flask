@@ -16,5 +16,5 @@ class AuthLoginDataResponseSchema(Schema):
     uid = fields.Str(dump_only=True)
 
 class AuthLoginResponseSchema(Schema):
-    meta = fields.Nested(MetaSchema(), dump_only=True)
-    data = fields.Nested(AuthLoginDataResponseSchema(), dump_only=True)
+    meta = fields.Nested(MetaSchema, dump_only=True)
+    data = fields.Nested(AuthLoginDataResponseSchema, dump_only=True)

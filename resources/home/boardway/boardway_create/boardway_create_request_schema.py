@@ -16,5 +16,5 @@ class BoardwayCreateDataResponseSchema(Schema):
     created_timestamp = fields.Str(dump_only=False)
 
 class BoardwayCreateResponseSchema(Schema):
-    meta = fields.Nested(MetaSchema(), dump_only=True)
-    data = fields.Nested(BoardwayCreateDataResponseSchema(), dump_only=True)
+    meta = fields.Nested(MetaSchema, dump_only=True)
+    data = fields.Nested(BoardwayCreateDataResponseSchema, dump_only=True)
