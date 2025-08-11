@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 from app.jwt import handle_jwt
 from app.extension import db, bcrypt, login_manager
 import models
-from resources.auth.auth_create import blp as AuthCreateBlueprint
+from resources.auth.auth_create.auth_create import blp as AuthCreateBlueprint
 from resources.auth.auth_login import blp as AuthLoginBlueprint
 from resources.log.log_create import blp as LogCreateBlueprint
 from resources.log.log_list import blp as LogListBlueprint
