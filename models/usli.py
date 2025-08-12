@@ -1,7 +1,6 @@
 from app.extension import db
-from flask_login import UserMixin
 
-class USLI(db.Model, UserMixin):
+class USLI(db.Model):
     __tablename__ = "uslis"
 
     id = db.Column(db.Integer, primary_key=True)
