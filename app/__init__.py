@@ -14,6 +14,8 @@ from resources.log.log_create import blp as LogCreateBlueprint
 from resources.log.log_list import blp as LogListBlueprint
 from resources.home.boardway.boardway_create.boardway_create import blp as BoardwayCreateBlueprint
 from resources.home.boardway.boardway_list.boardway_list import blp as BoardwayListBlueprint
+from resources.map.search.category.category_create.category_create import blp as CategoryCreateBlueprint
+from resources.map.search.category.category_list.category_list import blp as CategoryListBlueprint
 
 def create_app(db_url=None) -> Flask:
     load_dotenv()
@@ -45,5 +47,7 @@ def create_app(db_url=None) -> Flask:
     api.register_blueprint(LogListBlueprint)
     api.register_blueprint(BoardwayCreateBlueprint)
     api.register_blueprint(BoardwayListBlueprint)
+    api.register_blueprint(CategoryCreateBlueprint)
+    api.register_blueprint(CategoryListBlueprint)
 
     return app
