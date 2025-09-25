@@ -37,7 +37,7 @@ class CategorySearch(MethodView):
             time = datetime.now(timezone.utc)
             meta = MetaSchema()
             meta.response_id = uid.hex
-            meta.response_code = 2000
+            meta.response_code = 1000
             meta.response_date = str(time)
             meta.response_timestamp = str(time.timestamp())
             meta.error = None
