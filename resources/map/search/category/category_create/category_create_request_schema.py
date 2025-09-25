@@ -4,10 +4,12 @@ from schemas.meta import MetaSchema
 class CategoryCreateRequestSchema(Schema):
     title = fields.Str(required=True)
     image_url = fields.Str(required=True)
+    slug = fields.Str(required=True)
 
 class CategoryCreateDataResponseSchema(Schema):
     title = fields.Str(dump_only=True)
     image_url = fields.Str(dump_only=True)
+    slug = fields.Str(dump_only=True)
     created_date = fields.Str(dump_only=False)
     created_timestamp = fields.Str(dump_only=False)
 

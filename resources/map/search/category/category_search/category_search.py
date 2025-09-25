@@ -6,21 +6,20 @@ from flask_jwt_extended import (
 from datetime import datetime, timezone
 from app.extension import db, uid
 from models.map.search_category import MapSearchCategory
-from resources.map.search.category.category_create.category_create_request_schema import CategoryCreateDataResponseSchema, CategoryCreateRequestSchema, CategoryCreateResponseSchema
+from resources.map.search.category.category_search.category_search_request_schema import CategorySearchRequestSchema
 from schemas.error import ErrorSchema
 from schemas.meta import MetaSchema
 
-blp = Blueprint("CategoryCreate", __name__, description="Category Create")
+blp = Blueprint("CategorySearch", __name__, description="Category Search")
 
-@blp.route("/map/category/create")
-class CategoryCreate(MethodView):
+@blp.route("/map/category/search")
+class CategorySearch(MethodView):
     @jwt_required()
-    @blp.arguments(CategoryCreateRequestSchema)
+    @blp.arguments(CategorySearchRequestSchema)
     @blp.response(200, CategoryCreateResponseSchema)
     def post(self, request):
         title = request["title"]
         image_url = request["image_url"]
-        slug = request["slug"]
 
         category = MapSearchCategory.query.filter_by(title=title).first()
         if category:
@@ -29,22 +28,20 @@ class CategoryCreate(MethodView):
             time = datetime.now(timezone.utc)
             new_category = MapSearchCategory(title=title,
                                     image_url=image_url,
-                                    slug=slug,
                                     created_date=str(time),
                                     created_timestamp=str(time.timestamp()))
             db.session.add(new_category)
             db.session.commit()
             return getCategoryCreateSuccessResponse(1000, new_category)
 
-def getCategoryCreateSuccessResponse(response_code, category):
+def getCategoryCreateSuccessResponse(response_code, boardway):
     time = datetime.now(timezone.utc)
 
     data = CategoryCreateDataResponseSchema()
-    data.title = category.title
-    data.image_url = category.image_url
-    data.slug = category.slug
-    data.created_date = category.created_date
-    data.created_timestamp = category.created_timestamp
+    data.title = boardway.title
+    data.image_url = boardway.image_url
+    data.created_date = boardway.created_date
+    data.created_timestamp = boardway.created_timestamp
 
     meta = MetaSchema()
     meta.response_id = uid.hex

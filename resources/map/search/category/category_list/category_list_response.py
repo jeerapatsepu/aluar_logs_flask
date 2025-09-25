@@ -5,6 +5,7 @@ class CategoryListDataResponseSchema(Schema):
     id = fields.Integer(dump_only=True)
     title = fields.String(dump_only=True)
     image_url = fields.String(dump_only=True)
+    slug = fields.String(dump_only=True)
     created_date = fields.String(dump_only=True)
     created_timestamp = fields.String(dump_only=True)
 
