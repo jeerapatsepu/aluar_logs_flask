@@ -12,4 +12,4 @@ class CategorySearchRequestSchema(Schema):
 
 class CategorySearchResponseSchema(Schema):
     meta = fields.Nested(MetaSchema, dump_only=True)
-    data = fields.Dict()
+    data = fields.Raw()
