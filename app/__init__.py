@@ -16,6 +16,7 @@ from resources.home.boardway.boardway_create.boardway_create import blp as Board
 from resources.home.boardway.boardway_list.boardway_list import blp as BoardwayListBlueprint
 from resources.map.search.category.category_create.category_create import blp as CategoryCreateBlueprint
 from resources.map.search.category.category_list.category_list import blp as CategoryListBlueprint
+from resources.map.search.category.category_search.category_search import blp as CategorySearchBlueprint
 
 def create_app(db_url=None) -> Flask:
     load_dotenv()
@@ -49,5 +50,6 @@ def create_app(db_url=None) -> Flask:
     api.register_blueprint(BoardwayListBlueprint)
     api.register_blueprint(CategoryCreateBlueprint)
     api.register_blueprint(CategoryListBlueprint)
+    api.register_blueprint(CategorySearchBlueprint)
 
     return app

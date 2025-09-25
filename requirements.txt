@@ -9,3 +9,4 @@ gunicorn
 flask-bcrypt
 marshmallow_enum
 psycopg2-binary
+requests
