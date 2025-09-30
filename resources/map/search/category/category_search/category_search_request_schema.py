@@ -10,6 +10,13 @@ class CategorySearchRequestSchema(Schema):
     limit = fields.Int(required=True)
     language = fields.Str(required=True)
 
+# class CategorySearchDataResponseSchema(Schema):
+#     title = fields.Str(dump_only=True)
+#     image_url = fields.Str(dump_only=True)
+#     slug = fields.Str(dump_only=True)
+#     created_date = fields.Str(dump_only=False)
+#     created_timestamp = fields.Str(dump_only=False)
+
 class CategorySearchResponseSchema(Schema):
     meta = fields.Nested(MetaSchema, dump_only=True)
     data = fields.Raw()

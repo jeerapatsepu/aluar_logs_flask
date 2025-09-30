@@ -14,11 +14,18 @@ blp = Blueprint("CategoryList", __name__, description="Category List")
 
 @blp.route("/map/category/list")
 class CategoryList(MethodView):
+    
+    
     @blp.response(200, CategoryListResponseSchema)
     def get(self):
         boardway_list = MapSearchCategory.query.all()
-        return getCategoryListSuccessResponse(1000, boardway_list)
+        sort_boardway_list = boardway_list.sort(key=self.sortBoardwayList)
+        
+        return getCategoryListSuccessResponse(1000, sort_boardway_list)
 
+    def sortBoardwayList(e):
+        return e['id']
+    
 def getCategoryListSuccessResponse(response_code, boardway_list):
     time = datetime.now(timezone.utc)
 
