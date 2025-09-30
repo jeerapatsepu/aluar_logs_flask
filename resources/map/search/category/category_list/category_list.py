@@ -23,7 +23,7 @@ class CategoryList(MethodView):
         
         return getCategoryListSuccessResponse(1000, sort_boardway_list)
 
-    def sortBoardwayList(e):
+    def sortBoardwayList(self, e):
         return e['id']
     
 def getCategoryListSuccessResponse(response_code, boardway_list):
