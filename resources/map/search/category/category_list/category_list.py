@@ -19,12 +19,12 @@ class CategoryList(MethodView):
     @blp.response(200, CategoryListResponseSchema)
     def get(self):
         boardway_list = MapSearchCategory.query.all()
-        sort_boardway_list = boardway_list.sort(key=self.sortBoardwayList)
+        boardway_list.sort(key=self.sortBoardwayList)
         
-        return getCategoryListSuccessResponse(1000, sort_boardway_list)
+        return getCategoryListSuccessResponse(1000, boardway_list)
 
     def sortBoardwayList(self, e):
-        return e['id']
+        return e.id
     
 def getCategoryListSuccessResponse(response_code, boardway_list):
     time = datetime.now(timezone.utc)
