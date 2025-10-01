@@ -30,7 +30,7 @@ class CategorySearch(MethodView):
 
         tom_tom_key = os.getenv("TOM_TOM_KEY")
         
-        url = "https://api.tomtom.com/search/2/categorySearch/" + str(category) + ".json?key=" + str(tom_tom_key) + "&offset=" + str(offset) + "&limit=" + str(limit) + "&language=" + str(language) + "&lat=" + str(lat) + "&lon=" + str(lon)
+        url = "https://api.tomtom.com/search/2/categorySearch/" + str(category) + ".json?key=" + str(tom_tom_key) + "&ofs=" + str(offset) + "&limit=" + str(limit) + "&language=" + str(language) + "&lat=" + str(lat) + "&lon=" + str(lon)
         ttt = requests.get(url)
 
         if ttt.status_code == 200:
