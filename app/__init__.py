@@ -17,6 +17,7 @@ from resources.home.boardway.boardway_list.boardway_list import blp as BoardwayL
 from resources.map.search.category.category_create.category_create import blp as CategoryCreateBlueprint
 from resources.map.search.category.category_list.category_list import blp as CategoryListBlueprint
 from resources.map.search.category.category_search.category_search import blp as CategorySearchBlueprint
+from resources.map.search.nearby.nearby_search.nearby_search import blp as NearBySearchBlueprint
 
 def create_app(db_url=None) -> Flask:
     load_dotenv()
@@ -51,5 +52,6 @@ def create_app(db_url=None) -> Flask:
     api.register_blueprint(CategoryCreateBlueprint)
     api.register_blueprint(CategoryListBlueprint)
     api.register_blueprint(CategorySearchBlueprint)
+    api.register_blueprint(NearBySearchBlueprint)
 
     return app
