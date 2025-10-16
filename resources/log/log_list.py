@@ -27,17 +27,17 @@ class LogList(MethodView):
         limit = request["limit"]
         owner = request["owner"]
         logs = Log.query.filter_by(owner=owner)
-        return getResponse(1000, logs[offset : offset + limit], error=None)
+        return self.getResponse(1000, logs[offset : offset + limit], error=None)
 
-def getResponse(response_code, data, error):
-    time = datetime.now(timezone.utc)
-    response = LogListResponseSchema()
-    meta = MetaSchema()
-    meta.response_id = uuid4().hex
-    meta.response_code = response_code
-    meta.response_date = str(time)
-    meta.response_timestamp = str(time.timestamp())
-    meta.error = error
-    response.meta = meta
-    response.data = data
-    return response
+    def getResponse(self, response_code, data, error):
+        time = datetime.now(timezone.utc)
+        response = LogListResponseSchema()
+        meta = MetaSchema()
+        meta.response_id = uuid4().hex
+        meta.response_code = response_code
+        meta.response_date = str(time)
+        meta.response_timestamp = str(time.timestamp())
+        meta.error = error
+        response.meta = meta
+        response.data = data
+        return response

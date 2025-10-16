@@ -2,9 +2,6 @@
 import os
 from flask.views import MethodView
 from flask_smorest import Blueprint
-from flask_jwt_extended import (
-    jwt_required
-)
 import requests
 from flask import Flask, jsonify, request as dd
 from datetime import datetime, timezone

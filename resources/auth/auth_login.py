@@ -23,48 +23,48 @@ class AuthLogin(MethodView):
         password = request["password"]
         usli = USLI.query.filter_by(email=email).first()
         if usli and bcrypt.check_password_hash(pw_hash=usli.password, password=password):
-            return getAuthLoginSuccessRespone(1000, usli)
+            return self.getAuthLoginSuccessRespone(1000, usli)
         else:
             # logging.exception("AuthLogin")
-            return getAuthLoginFailRespone(5000)
+            return self.getAuthLoginFailRespone(5000)
 
-def getAuthLoginSuccessRespone(response_code, user):
-    access_token = create_access_token(identity=str(user.uid), fresh=True)
-    refresh_token = create_refresh_token(identity=str(user.uid))
-    time = datetime.now(timezone.utc)
+    def getAuthLoginSuccessRespone(self, response_code, user):
+        access_token = create_access_token(identity=str(user.uid), fresh=True)
+        refresh_token = create_refresh_token(identity=str(user.uid))
+        time = datetime.now(timezone.utc)
 
-    data = AuthLoginDataResponseSchema()
-    data.access_token = access_token
-    data.refresh_token = refresh_token
-    data.uid = user.uid
+        data = AuthLoginDataResponseSchema()
+        data.access_token = access_token
+        data.refresh_token = refresh_token
+        data.uid = user.uid
 
-    meta = MetaSchema()
-    meta.response_id = uid.hex
-    meta.response_code = response_code
-    meta.response_date = str(time)
-    meta.response_timestamp = str(time.timestamp())
-    meta.error = None
+        meta = MetaSchema()
+        meta.response_id = uid.hex
+        meta.response_code = response_code
+        meta.response_date = str(time)
+        meta.response_timestamp = str(time.timestamp())
+        meta.error = None
 
-    response = AuthLoginResponseSchema()
-    response.meta = meta
-    response.data = data
-    return response
+        response = AuthLoginResponseSchema()
+        response.meta = meta
+        response.data = data
+        return response
 
-def getAuthLoginFailRespone(response_code):
-    time = datetime.now(timezone.utc)
+    def getAuthLoginFailRespone(self, response_code):
+        time = datetime.now(timezone.utc)
 
-    error = ErrorSchema()
-    error.title = "Service can not answer"
-    error.message = "Can not authen the user"
+        error = ErrorSchema()
+        error.title = "Service can not answer"
+        error.message = "Can not authen the user"
 
-    meta = MetaSchema()
-    meta.response_id = uid.hex
-    meta.response_code = response_code
-    meta.response_date = str(time)
-    meta.response_timestamp = str(time.timestamp())
-    meta.error = error
+        meta = MetaSchema()
+        meta.response_id = uid.hex
+        meta.response_code = response_code
+        meta.response_date = str(time)
+        meta.response_timestamp = str(time.timestamp())
+        meta.error = error
 
-    response = AuthLoginResponseSchema()
-    response.meta = meta
-    response.data = None
-    return response
+        response = AuthLoginResponseSchema()
+        response.meta = meta
+        response.data = None
+        return response

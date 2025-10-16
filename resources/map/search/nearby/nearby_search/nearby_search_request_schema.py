@@ -1,5 +1,4 @@
-from typing import Any
-from marshmallow import Schema, ValidationError, fields, validates_schema
+from marshmallow import Schema, fields
 from schemas.meta import MetaSchema
 
 class NearBySearchRequestSchema(Schema):

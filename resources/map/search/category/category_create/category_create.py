@@ -25,7 +25,7 @@ class CategoryCreate(MethodView):
 
         category = MapSearchCategory.query.filter_by(title=title).first()
         if category:
-            return getCategoryCreateFailResponse(5000)
+            return self.getCategoryCreateFailResponse(5000)
         else:
             time = datetime.now(timezone.utc)
             new_category = MapSearchCategory(category_id=category_id,
@@ -36,46 +36,46 @@ class CategoryCreate(MethodView):
                                              created_timestamp=str(time.timestamp()))
             db.session.add(new_category)
             db.session.commit()
-            return getCategoryCreateSuccessResponse(1000, new_category)
+            return self.getCategoryCreateSuccessResponse(1000, new_category)
 
-def getCategoryCreateSuccessResponse(response_code, category):
-    time = datetime.now(timezone.utc)
+    def getCategoryCreateSuccessResponse(self, response_code, category):
+        time = datetime.now(timezone.utc)
 
-    data = CategoryCreateDataResponseSchema()
-    data.category_id = category.category_id
-    data.title = category.title
-    data.image_url = category.image_url
-    data.slug = category.slug
-    data.created_date = category.created_date
-    data.created_timestamp = category.created_timestamp
+        data = CategoryCreateDataResponseSchema()
+        data.category_id = category.category_id
+        data.title = category.title
+        data.image_url = category.image_url
+        data.slug = category.slug
+        data.created_date = category.created_date
+        data.created_timestamp = category.created_timestamp
 
-    meta = MetaSchema()
-    meta.response_id = uid.hex
-    meta.response_code = response_code
-    meta.response_date = str(time)
-    meta.response_timestamp = str(time.timestamp())
-    meta.error = None
+        meta = MetaSchema()
+        meta.response_id = uid.hex
+        meta.response_code = response_code
+        meta.response_date = str(time)
+        meta.response_timestamp = str(time.timestamp())
+        meta.error = None
 
-    response = CategoryCreateResponseSchema()
-    response.meta = meta
-    response.data = data
-    return response
+        response = CategoryCreateResponseSchema()
+        response.meta = meta
+        response.data = data
+        return response
 
-def getCategoryCreateFailResponse(response_code):
-    time = datetime.now(timezone.utc)
+    def getCategoryCreateFailResponse(self, response_code):
+        time = datetime.now(timezone.utc)
 
-    error = ErrorSchema()
-    error.title = "Service can not answer"
-    error.message = "Category is not unique"
+        error = ErrorSchema()
+        error.title = "Service can not answer"
+        error.message = "Category is not unique"
 
-    meta = MetaSchema()
-    meta.response_id = uid.hex
-    meta.response_code = response_code
-    meta.response_date = str(time)
-    meta.response_timestamp = str(time.timestamp())
-    meta.error = error
+        meta = MetaSchema()
+        meta.response_id = uid.hex
+        meta.response_code = response_code
+        meta.response_date = str(time)
+        meta.response_timestamp = str(time.timestamp())
+        meta.error = error
 
-    response = CategoryCreateResponseSchema()
-    response.meta = meta
-    response.data = None
-    return response
+        response = CategoryCreateResponseSchema()
+        response.meta = meta
+        response.data = None
+        return response

@@ -23,7 +23,7 @@ class AuthCreate(MethodView):
         password = request["password"]
         usli = USLI.query.filter_by(email=email).first()
         if usli:
-            return getAuthCreateFailResponse(5000)
+            return self.getAuthCreateFailResponse(5000)
         else:
             id = uid.hex
             new_user = USLI(uid=id,
@@ -31,45 +31,45 @@ class AuthCreate(MethodView):
                             password=bcrypt.generate_password_hash(password).decode('utf-8'))
             db.session.add(new_user)
             db.session.commit()
-            return getAuthCreateSuccessResponse(1000, id)
+            return self.getAuthCreateSuccessResponse(1000, id)
 
-def getAuthCreateSuccessResponse(response_code, id):
-    access_token = create_access_token(identity=str(id), fresh=True)
-    refresh_token = create_refresh_token(identity=str(id))
-    time = datetime.now(timezone.utc)
+    def getAuthCreateSuccessResponse(self, response_code, id):
+        access_token = create_access_token(identity=str(id), fresh=True)
+        refresh_token = create_refresh_token(identity=str(id))
+        time = datetime.now(timezone.utc)
 
-    data = AuthLoginDataResponseSchema()
-    data.access_token = access_token
-    data.refresh_token = refresh_token
-    data.uid = id
+        data = AuthLoginDataResponseSchema()
+        data.access_token = access_token
+        data.refresh_token = refresh_token
+        data.uid = id
 
-    meta = MetaSchema()
-    meta.response_id = uid.hex
-    meta.response_code = response_code
-    meta.response_date = str(time)
-    meta.response_timestamp = str(time.timestamp())
-    meta.error = None
+        meta = MetaSchema()
+        meta.response_id = uid.hex
+        meta.response_code = response_code
+        meta.response_date = str(time)
+        meta.response_timestamp = str(time.timestamp())
+        meta.error = None
 
-    response = AuthLoginResponseSchema()
-    response.meta = meta
-    response.data = data
-    return response
+        response = AuthLoginResponseSchema()
+        response.meta = meta
+        response.data = data
+        return response
 
-def getAuthCreateFailResponse(response_code):
-    time = datetime.now(timezone.utc)
+    def getAuthCreateFailResponse(self, response_code):
+        time = datetime.now(timezone.utc)
 
-    error = ErrorSchema()
-    error.title = "Service can not answer"
-    error.message = "Email is not unique"
+        error = ErrorSchema()
+        error.title = "Service can not answer"
+        error.message = "Email is not unique"
 
-    meta = MetaSchema()
-    meta.response_id = uid.hex
-    meta.response_code = response_code
-    meta.response_date = str(time)
-    meta.response_timestamp = str(time.timestamp())
-    meta.error = error
+        meta = MetaSchema()
+        meta.response_id = uid.hex
+        meta.response_code = response_code
+        meta.response_date = str(time)
+        meta.response_timestamp = str(time.timestamp())
+        meta.error = error
 
-    response = AuthLoginResponseSchema()
-    response.meta = meta
-    response.data = None
-    return response
+        response = AuthLoginResponseSchema()
+        response.meta = meta
+        response.data = None
+        return response

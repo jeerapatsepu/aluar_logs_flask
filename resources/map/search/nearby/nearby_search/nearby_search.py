@@ -2,16 +2,11 @@
 import os
 from flask.views import MethodView
 from flask_smorest import Blueprint
-from flask_jwt_extended import (
-    jwt_required
-)
 import requests
 from flask import Flask, jsonify, request as dd
 from datetime import datetime, timezone
 from app.shared import db, uid
-from models.map.search_category import MapSearchCategory
 from resources.map.search.nearby.nearby_search.nearby_search_request_schema import NearBySearchRequestSchema, NearBySearchResponseSchema
-from schemas.error import ErrorSchema
 from schemas.meta import MetaSchema
 
 blp = Blueprint("NearBySearch", __name__, description="NearBy Search")
