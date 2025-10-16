@@ -1,4 +1,4 @@
-from app.extension import db
+from app.shared import db
 
 class MapSearchCategory(db.Model):
     __tablename__ = "map_search_categories"

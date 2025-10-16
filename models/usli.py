@@ -1,4 +1,4 @@
-from app.extension import db
+from app.shared import db
 
 class USLI(db.Model):
     __tablename__ = "uslis"

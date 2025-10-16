@@ -4,7 +4,7 @@ from flask_jwt_extended import (
     jwt_required
 )
 from datetime import datetime, timezone
-from app.extension import db, uid
+from app.shared import db, uid
 from models.map.search_category import MapSearchCategory
 from resources.map.search.category.category_create.category_create_request_schema import CategoryCreateDataResponseSchema, CategoryCreateRequestSchema, CategoryCreateResponseSchema
 from schemas.error import ErrorSchema

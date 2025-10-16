@@ -9,7 +9,7 @@ from datetime import datetime, timezone
 from uuid import uuid4
 from models.log import Log
 from schemas.log.log_create import LogCreateDataResponseSchema, LogCreateRequestSchema, LogCreateResponseSchema
-from app.extension import db
+from app.shared import db
 from schemas.meta import MetaSchema
 from shared import getError
 

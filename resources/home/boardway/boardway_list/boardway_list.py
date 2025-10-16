@@ -5,7 +5,7 @@ from flask_jwt_extended import (
 )
 from datetime import datetime, timezone
 from models import Boardway
-from app.extension import db, uid
+from app.shared import db, uid
 from resources.home.boardway.boardway_list.boardway_list_response import BoardwayListResponseSchema
 from schemas.error import ErrorSchema
 from schemas.meta import MetaSchema

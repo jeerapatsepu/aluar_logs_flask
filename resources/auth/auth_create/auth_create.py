@@ -7,10 +7,10 @@ from flask_jwt_extended import (
 from datetime import datetime, timezone
 from models import USLI
 from resources.auth.auth_create.auth_create_request_schema import AuthCreateRequestSchema, AuthLoginDataResponseSchema, AuthLoginResponseSchema
-from app.extension import db, uid
+from app.shared import db, uid
 from schemas.error import ErrorSchema
 from schemas.meta import MetaSchema
-from app.extension import bcrypt
+from app.shared import bcrypt
 
 blp = Blueprint("AuthCreate", __name__, description="Auth Create")
 

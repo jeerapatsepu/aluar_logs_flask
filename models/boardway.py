@@ -1,4 +1,4 @@
-from app.extension import db
+from app.shared import db
 
 class Boardway(db.Model):
     __tablename__ = "boardways"

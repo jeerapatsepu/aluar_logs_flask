@@ -1,57 +1,20 @@
-import os
-import secrets
-from flask import Flask, jsonify
+from flask import Flask
 from flask_migrate import Migrate
-from flask_smorest import Api
-from datetime import timedelta
 from dotenv import load_dotenv
-from app.jwt import handle_jwt
-from app.extension import db, bcrypt
+from app.app_jwt import handle_jwt
+from app.blueprint_manager import register_blueprint
+from app.app_config import config
+from app.shared import db, bcrypt
 import models
-from resources.auth.auth_create.auth_create import blp as AuthCreateBlueprint
-from resources.auth.auth_login import blp as AuthLoginBlueprint
-from resources.log.log_create import blp as LogCreateBlueprint
-from resources.log.log_list import blp as LogListBlueprint
-from resources.home.boardway.boardway_create.boardway_create import blp as BoardwayCreateBlueprint
-from resources.home.boardway.boardway_list.boardway_list import blp as BoardwayListBlueprint
-from resources.map.search.category.category_create.category_create import blp as CategoryCreateBlueprint
-from resources.map.search.category.category_list.category_list import blp as CategoryListBlueprint
-from resources.map.search.category.category_search.category_search import blp as CategorySearchBlueprint
-from resources.map.search.nearby.nearby_search.nearby_search import blp as NearBySearchBlueprint
 
 def create_app(db_url=None) -> Flask:
     load_dotenv()
     app = Flask(__name__)
-
-    SECRET_KEY = os.getenv("SECRET_KEY")
-    JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
-
-    app.config["PROPAGATE_EXCEPTIONS"] = True
-    app.config["API_VERSION"] = "v1"
-    app.config["API_TITLE"] = "Log API"
-    app.config["OPENAPI_VERSION"] = "3.0.3"
-    app.config["SQLALCHEMY_DATABASE_URI"] = db_url or os.getenv("DATABASE_URL", "sqlite:///data.db")
-    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-    app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(days=15)
-    app.config['JWT_REFRESH_TOKEN_EXPIRES'] = timedelta(days=30)
-    app.config['SECRET_KEY'] = SECRET_KEY
-    app.config["JWT_SECRET_KEY"] = JWT_SECRET_KEY
-    app.config['JWT_TOKEN_LOCATION'] = ['headers']
-
+    config(app, db_url)
     db.init_app(app)
     bcrypt.init_app(app)
     migrate = Migrate(app, db)
     handle_jwt(app)
-    api = Api(app)
-    api.register_blueprint(AuthCreateBlueprint)
-    api.register_blueprint(AuthLoginBlueprint)
-    api.register_blueprint(LogCreateBlueprint)
-    api.register_blueprint(LogListBlueprint)
-    api.register_blueprint(BoardwayCreateBlueprint)
-    api.register_blueprint(BoardwayListBlueprint)
-    api.register_blueprint(CategoryCreateBlueprint)
-    api.register_blueprint(CategoryListBlueprint)
-    api.register_blueprint(CategorySearchBlueprint)
-    api.register_blueprint(NearBySearchBlueprint)
+    register_blueprint(app)
 
     return app

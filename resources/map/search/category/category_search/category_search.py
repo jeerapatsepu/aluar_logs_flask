@@ -8,7 +8,7 @@ from flask_jwt_extended import (
 import requests
 from flask import Flask, jsonify, request as dd
 from datetime import datetime, timezone
-from app.extension import db, uid
+from app.shared import db, uid
 from models.map.search_category import MapSearchCategory
 from resources.map.search.category.category_search.category_search_request_schema import CategorySearchRequestSchema, CategorySearchResponseSchema
 from schemas.error import ErrorSchema

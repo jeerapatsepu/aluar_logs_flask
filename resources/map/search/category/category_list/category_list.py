@@ -5,7 +5,7 @@ from flask_jwt_extended import (
 )
 from datetime import datetime, timezone
 from models import MapSearchCategory
-from app.extension import db, uid
+from app.shared import db, uid
 from resources.map.search.category.category_list.category_list_response import CategoryListResponseSchema
 from schemas.error import ErrorSchema
 from schemas.meta import MetaSchema

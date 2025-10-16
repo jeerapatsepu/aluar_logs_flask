@@ -8,7 +8,7 @@ from flask_jwt_extended import (
 from datetime import datetime, timezone
 from models.usli import USLI
 from resources.auth.auth_create.auth_create_request_schema import AuthCreateRequestSchema, AuthLoginDataResponseSchema, AuthLoginResponseSchema
-from app.extension import uid, bcrypt
+from app.shared import uid, bcrypt
 from schemas.error import ErrorSchema
 from schemas.meta import MetaSchema
 
