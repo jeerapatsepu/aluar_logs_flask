@@ -1,13 +1,8 @@
 from flask.views import MethodView
 from flask_smorest import Blueprint
-from datetime import datetime, timezone
-
-from sqlalchemy import Integer
 from models import MapSearchCategory
-from app.shared import uid
 from resources.map.search.category.category_list.category_list_response import CategoryListResponseSchema
-from schemas.error import ErrorSchema
-from schemas.meta import MetaSchema
+from resources.shared.shared_meta import get_meta_response
 
 blp = Blueprint("CategoryList", __name__, description="Category List")
 
@@ -22,18 +17,9 @@ class CategoryList(MethodView):
 
     def sortBoardwayList(self, e):
         return e.id
-    
-    def getCategoryListSuccessResponse(self, response_code: Integer, boardway_list):
-        time = datetime.now(timezone.utc)
 
-        meta = MetaSchema()
-        meta.response_id = uid.hex
-        meta.response_code = response_code
-        meta.response_date = str(time)
-        meta.response_timestamp = str(time.timestamp())
-        meta.error = None
-
+    def getCategoryListSuccessResponse(self, response_code: int, boardway_list):
         response = CategoryListResponseSchema()
-        response.meta = meta
+        response.meta = get_meta_response(response_code)
         response.data = boardway_list
         return response
