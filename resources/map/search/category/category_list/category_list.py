@@ -1,6 +1,8 @@
 from flask.views import MethodView
 from flask_smorest import Blueprint
 from datetime import datetime, timezone
+
+from sqlalchemy import Integer
 from models import MapSearchCategory
 from app.shared import uid
 from resources.map.search.category.category_list.category_list_response import CategoryListResponseSchema
@@ -21,7 +23,7 @@ class CategoryList(MethodView):
     def sortBoardwayList(self, e):
         return e.id
     
-    def getCategoryListSuccessResponse(self, response_code, boardway_list):
+    def getCategoryListSuccessResponse(self, response_code: Integer, boardway_list):
         time = datetime.now(timezone.utc)
 
         meta = MetaSchema()
