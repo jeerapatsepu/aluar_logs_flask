@@ -18,6 +18,7 @@ class CategoryCreate(MethodView):
     @blp.arguments(CategoryCreateRequestSchema)
     @blp.response(200, CategoryCreateResponseSchema)
     def post(self, request):
+        category_id = request["category_id"]
         title = request["title"]
         image_url = request["image_url"]
         slug = request["slug"]
@@ -27,11 +28,12 @@ class CategoryCreate(MethodView):
             return getCategoryCreateFailResponse(5000)
         else:
             time = datetime.now(timezone.utc)
-            new_category = MapSearchCategory(title=title,
-                                    image_url=image_url,
-                                    slug=slug,
-                                    created_date=str(time),
-                                    created_timestamp=str(time.timestamp()))
+            new_category = MapSearchCategory(category_id=category_id,
+                                             title=title,
+                                             image_url=image_url,
+                                             slug=slug,
+                                             created_date=str(time),
+                                             created_timestamp=str(time.timestamp()))
             db.session.add(new_category)
             db.session.commit()
             return getCategoryCreateSuccessResponse(1000, new_category)
@@ -40,6 +42,7 @@ def getCategoryCreateSuccessResponse(response_code, category):
     time = datetime.now(timezone.utc)
 
     data = CategoryCreateDataResponseSchema()
+    data.category_id = category.category_id
     data.title = category.title
     data.image_url = category.image_url
     data.slug = category.slug
